@@ -7,6 +7,7 @@
     <authors>Jake Ginnivan</authors>
     <owners>Sergey Shaldanov</owners>
     <projectUrl>https://github.com/serge-shaldanov/VSTOContrib</projectUrl>
+	<license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Core utils for VSTO Contrib. This is a fork of the original project: https://github.com/JakeGinnivan/VSTOContrib. Nothing was changed, I just added a separate NuGet package for the VSTOContrib.Core project to reuse the same codebase across multiple Office projects.</description>
     <tags>VSTO,Office</tags>

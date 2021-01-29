@@ -7,11 +7,12 @@
     <authors>Jake Ginnivan</authors>
     <owners>Sergey Shaldanov</owners>
     <projectUrl>https://github.com/serge-shaldanov/VSTOContrib</projectUrl>
+	<license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adds Autofac support to VSTO Contrib. This is a fork of the original project: https://github.com/JakeGinnivan/VSTOContrib. Nothing was changed.</description>
     <tags>VSTO,Office,Autofac,IoC</tags>
     <dependencies>
-      <dependency id="Autofac" />
+      <dependency id="Autofac" version="3.5.2" />
     </dependencies>
   </metadata>
 </package>
