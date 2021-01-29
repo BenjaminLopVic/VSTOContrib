@@ -39,6 +39,21 @@
     <MSBuild Projects="VSTO Contrib Office Application.proj" Properties="OfficeApplication=Word;$(CommonProperties)" ToolsVersion="4.0" />
     <MSBuild Projects="VSTO Contrib Office Application.proj" Properties="OfficeApplication=PowerPoint;$(CommonProperties)" ToolsVersion="4.0" />
 
+    <MSBuild Projects="$(Root)src\VSTOContrib.Core\VSTOContrib.Core.csproj" Properties="Configuration=$(Configuration);Platform=AnyCPU;" ToolsVersion="4.0" />
+
+    <PropertyGroup>
+      <NuGet>$(Root)src\.nuget\NuGet.exe</NuGet>
+      <NuGetManifest>$(Root)src\VSTOContrib.Core\VSTOContrib.Core.nuspec</NuGetManifest>
+      <AutofacNuGetFolder>$(Root)build\Artifacts\NuGet\Core\</AutofacNuGetFolder>
+    </PropertyGroup>
+
+    <Copy SourceFiles="$(Root)src\VSTOContrib.Core\bin\$(Configuration)\VSTOContrib.Core.dll"
+          DestinationFiles="$(AutofacNuGetFolder)lib\net40\VSTOContrib.Core.dll"/>
+    <Copy SourceFiles="$(Root)src\VSTOContrib.Core\bin\$(Configuration)\VSTOContrib.Core.pdb"
+          DestinationFiles="$(AutofacNuGetFolder)lib\net40\VSTOContrib.Core.pdb"/>
+
+    <Exec Command='$(NuGet) pack "$(NuGetManifest)" -BasePath "$(AutofacNuGetFolder)\" -OutputDirectory "$(Root)build\Artifacts" -Version $(GitVersion_NugetVersion)' />
+
     <MSBuild Projects="$(Root)src\VSTOContrib.Autofac\VSTOContrib.Autofac.csproj" Properties="Configuration=$(Configuration);Platform=AnyCPU;" ToolsVersion="4.0" />
 
     <PropertyGroup>
@@ -53,7 +68,7 @@
           DestinationFiles="$(AutofacNuGetFolder)lib\net40\VSTOContrib.Autofac.pdb"/>
     <Copy SourceFiles="$(Root)src\VSTOContrib.Autofac\Readme.txt"
           DestinationFiles="$(AutofacNuGetFolder)Readme.txt"/>
-    
+
     <Exec Command='$(NuGet) pack "$(NuGetManifest)" -BasePath "$(AutofacNuGetFolder)\" -OutputDirectory "$(Root)build\Artifacts" -Version $(GitVersion_NugetVersion)' />
   </Target>
 </Project>

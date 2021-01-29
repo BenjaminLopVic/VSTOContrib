@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>VSTOContrib.Autofac</id>
-    <version>1.0.0.0</version>
+    <id>VSTOContrib.Autofac.Fork</id>
+    <version>1.0.0</version>
     <title>VSTOContrib.Autofac</title>
     <authors>Jake Ginnivan</authors>
-    <owners>Jake Ginnivan</owners>
-    <projectUrl>http://vstocontrib.codeplex.com/</projectUrl>
+    <owners>Sergey Shaldanov</owners>
+    <projectUrl>https://github.com/serge-shaldanov/VSTOContrib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Adds Autofac support to VSTO Contrib</description>
+    <description>Adds Autofac support to VSTO Contrib. This is a fork of the original project: https://github.com/JakeGinnivan/VSTOContrib. Nothing was changed.</description>
     <tags>VSTO,Office,Autofac,IoC</tags>
     <dependencies>
       <dependency id="Autofac" />
