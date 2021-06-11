@@ -74,16 +74,22 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                 }
             }
 
-            foreach (var oneToManyCustomTaskPaneAdapter in windowToTaskPaneLookup[view]
-                .Except(new[] { ribbonViewModel })
-                .SelectMany(viewModelToHide => ribbonTaskPanes[viewModelToHide]))
+            if (windowToTaskPaneLookup.ContainsKey(view))
             {
-                oneToManyCustomTaskPaneAdapter.HideIfVisible();
+                foreach (var oneToManyCustomTaskPaneAdapter in windowToTaskPaneLookup[view]
+                    .Except(new[] {ribbonViewModel})
+                    .SelectMany(viewModelToHide => ribbonTaskPanes[viewModelToHide]))
+                {
+                    oneToManyCustomTaskPaneAdapter.HideIfVisible();
+                }
             }
 
-            foreach (var toRestore in ribbonTaskPanes[ribbonViewModel])
+            if (ribbonTaskPanes.ContainsKey(ribbonViewModel))
             {
-                toRestore.RestoreIfNeeded();
+                foreach (var toRestore in ribbonTaskPanes[ribbonViewModel])
+                {
+                    toRestore.RestoreIfNeeded();
+                }
             }
         }
 
