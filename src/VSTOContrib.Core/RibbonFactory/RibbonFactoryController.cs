@@ -82,6 +82,11 @@ namespace VSTOContrib.Core.RibbonFactory
 
             var view = (object)control.Context;
             IRibbonViewModel viewModelInstance = ribbonViewModelResolver.ResolveInstanceFor(view);
+            if (viewModelInstance == null)
+            {
+                return null;
+            }
+
             VstoContribLog.Debug(l => l("Ribbon callback {0} being invoked on {1} (View: {2}, ViewModel: {3})",
                 methodName, control.Id, view.ToLogFormat(), viewModelInstance.ToLogFormat()));
 
@@ -119,6 +124,25 @@ namespace VSTOContrib.Core.RibbonFactory
             }
         }
 
+        public T InvokeGet<T>(IRibbonControl control, Expression<Action> caller, params object[] parameters)
+        {
+            object result = InvokeGet(control, caller, parameters);
+
+            if (result == null)
+            {
+                return default(T);
+            }
+
+            try
+            {
+                return (T) result;
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
         public void Invoke(IRibbonControl control, Expression<Action> caller, params object[] parameters)
         {
             try
@@ -129,6 +153,11 @@ namespace VSTOContrib.Core.RibbonFactory
 
                 var view = (object)control.Context;
                 IRibbonViewModel viewModelInstance = ribbonViewModelResolver.ResolveInstanceFor(view);
+                if (viewModelInstance == null)
+                {
+                    return;
+                }
+
                 VstoContribLog.Debug(l => l("Ribbon callback {0} being invoked on {1} (View: {2}, ViewModel: {3})",
                     methodName, control.Id, view.ToLogFormat(), viewModelInstance.ToLogFormat()));
 

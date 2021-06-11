@@ -137,7 +137,12 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                     customTaskPaneRegister.RegisterCustomTaskPanes(viewModel, newViewEventArgs.ViewInstance, context);
             }
 
-            return contextToViewModelLookup[context];
+            if (contextToViewModelLookup.ContainsKey(context))
+            {
+                return contextToViewModelLookup[context];
+            }
+
+            return null;
         }
 
         public void RibbonLoaded(IRibbonUI ribbonUi)

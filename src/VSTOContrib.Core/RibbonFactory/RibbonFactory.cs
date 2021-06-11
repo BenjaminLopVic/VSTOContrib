@@ -8,6 +8,7 @@ using Microsoft.Office.Tools;
 using VSTOContrib.Core.Annotations;
 using VSTOContrib.Core.RibbonFactory.Interfaces;
 using VSTOContrib.Core.RibbonFactory.Internal;
+using Core_RibbonControlSize = Microsoft.Office.Core.RibbonControlSize;
 
 namespace VSTOContrib.Core.RibbonFactory
 {
@@ -166,7 +167,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetDescription(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetDescription(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetDescription(null));
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public bool GetEnabled(IRibbonControl control)
         {
-            return (bool)ribbonFactoryController.InvokeGet(control, () => GetEnabled(null));
+            return ribbonFactoryController.InvokeGet<bool>(control, () => GetEnabled(null));
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetImageMso(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetImageMso(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetImageMso(null));
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetLabel(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetLabel(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetLabel(null));
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetKeyTip(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetKeyTip(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetKeyTip(null));
         }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetScreenTip(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetScreenTip(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetScreenTip(null));
         }
 
         /// <summary>
@@ -226,7 +227,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetSuperTip(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetSuperTip(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetSuperTip(null));
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public bool GetVisible(IRibbonControl control)
         {
-            return (bool)ribbonFactoryController.InvokeGet(control, () => GetVisible(null));
+            return ribbonFactoryController.InvokeGet<bool>(control, () => GetVisible(null));
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public bool GetShowImage(IRibbonControl control)
         {
-            return (bool)ribbonFactoryController.InvokeGet(control, () => GetShowImage(null));
+            return ribbonFactoryController.InvokeGet<bool>(control, () => GetShowImage(null));
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public bool GetShowLabel(IRibbonControl control)
         {
-            return (bool)ribbonFactoryController.InvokeGet(control, () => GetShowLabel(null));
+            return ribbonFactoryController.InvokeGet<bool>(control, () => GetShowLabel(null));
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public int GetItemCount(IRibbonControl control)
         {
-            return (int)ribbonFactoryController.InvokeGet(control, () => GetItemCount(null));
+            return ribbonFactoryController.InvokeGet<int>(control, () => GetItemCount(null));
         }
 
         /// <summary>
@@ -277,7 +278,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetItemId(IRibbonControl control, int index)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetItemId(null, index), index);
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetItemId(null, index), index);
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetItemLabel(IRibbonControl control, int index)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetItemLabel(null, index), index);
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetItemLabel(null, index), index);
         }
 
         /// <summary>
@@ -299,7 +300,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetItemScreenTip(IRibbonControl control, int index)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetItemScreenTip(null, index), index);
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetItemScreenTip(null, index), index);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetItemSuperTip(IRibbonControl control, int index)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetItemSuperTip(null, index), index);
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetItemSuperTip(null, index), index);
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetSelectedItemId(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetSelectedItemId(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetSelectedItemId(null));
         }
 
         /// <summary>
@@ -330,7 +331,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public int GetSelectedItemIndex(IRibbonControl control)
         {
-            return (int)ribbonFactoryController.InvokeGet(control, () => GetSelectedItemIndex(null));
+            return ribbonFactoryController.InvokeGet<int>(control, () => GetSelectedItemIndex(null));
         }
 
         /// <summary>
@@ -350,7 +351,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetText(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetText(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetText(null));
         }
 
         /// <summary>
@@ -360,7 +361,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetTitle(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetTitle(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetTitle(null));
         }
 
         /// <summary>
@@ -370,7 +371,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public bool GetPressed(IRibbonControl control)
         {
-            return (bool)ribbonFactoryController.InvokeGet(control, () => GetPressed(null));
+            return ribbonFactoryController.InvokeGet<bool>(control, () => GetPressed(null));
         }
 
         /// <summary>
@@ -380,7 +381,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public RibbonControlSize GetSize(IRibbonControl control)
         {
-            return (RibbonControlSize)ribbonFactoryController.InvokeGet(control, () => GetSize(null));
+            return ribbonFactoryController.InvokeGet<RibbonControlSize>(control, () => GetSize(null));
         }
 
         /// <summary>
@@ -390,7 +391,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public int GetItemHeight(IRibbonControl control)
         {
-            return (int)ribbonFactoryController.InvokeGet(control, () => GetItemHeight(control));
+            return ribbonFactoryController.InvokeGet<int>(control, () => GetItemHeight(control));
         }
 
 #if OFFICE2007
@@ -401,7 +402,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public stdole.IPictureDisp GetImage(IRibbonControl control)
         {
-            return (stdole.IPictureDisp)ribbonFactoryController.InvokeGet(control, () => GetImage(null));
+            return ribbonFactoryController.InvokeGet<stdole.IPictureDisp>(control, () => GetImage(null));
         }
 
         /// <summary>
@@ -412,7 +413,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public stdole.IPictureDisp GetItemImage(IRibbonControl control, int index)
         {
-            return (stdole.IPictureDisp)ribbonFactoryController.InvokeGet(control, () => GetItemImage(null, 0), index);
+            return ribbonFactoryController.InvokeGet<stdole.IPictureDisp>(control, () => GetItemImage(null, 0), index);
         }
 #else
         /// <summary>
@@ -422,7 +423,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public Bitmap GetImage(IRibbonControl control)
         {
-            return (Bitmap)ribbonFactoryController.InvokeGet(control, () => GetImage(null));
+            return ribbonFactoryController.InvokeGet<Bitmap>(control, () => GetImage(null));
         }
 
         /// <summary>
@@ -433,7 +434,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public Bitmap GetItemImage(IRibbonControl control, int index)
         {
-            return (Bitmap)ribbonFactoryController.InvokeGet(control, () => GetItemImage(null, 0), index);
+            return ribbonFactoryController.InvokeGet<Bitmap>(control, () => GetItemImage(null, 0), index);
         }
 #endif
         /// <summary>
@@ -453,7 +454,7 @@ namespace VSTOContrib.Core.RibbonFactory
         /// <returns></returns>
         public string GetHelperText(IRibbonControl control)
         {
-            return (string)ribbonFactoryController.InvokeGet(control, () => GetHelperText(null));
+            return ribbonFactoryController.InvokeGet<string>(control, () => GetHelperText(null));
         }
     }
 }

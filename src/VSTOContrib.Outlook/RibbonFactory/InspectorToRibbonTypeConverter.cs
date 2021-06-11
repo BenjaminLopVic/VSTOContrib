@@ -19,6 +19,11 @@ namespace VSTOContrib.Outlook.RibbonFactory
         public static OutlookRibbonType Convert(Inspector inspector)
         {
             object item = inspector.CurrentItem;
+            if (item == null)
+            {
+                return OutlookRibbonType.Unknown;
+            }
+
             var type = item.GetType();
 
             var messageClass = (string)type.InvokeMember(

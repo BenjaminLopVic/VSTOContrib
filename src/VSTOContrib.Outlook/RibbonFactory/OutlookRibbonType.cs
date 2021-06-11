@@ -7,6 +7,9 @@ namespace VSTOContrib.Outlook.RibbonFactory
     ///</summary>
     public enum OutlookRibbonType
     {
+        [Description("Microsoft.Outlook.Unknown")]
+        Unknown = 0,
+
         ///<summary>
         /// Appointment Item Inspector
         ///</summary>
