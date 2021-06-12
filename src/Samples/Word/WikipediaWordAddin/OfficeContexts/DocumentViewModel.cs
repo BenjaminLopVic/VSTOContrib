@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
 using VSTOContrib.Core.Extensions;
 using VSTOContrib.Core.RibbonFactory;
@@ -20,6 +21,21 @@ namespace WikipediaWordAddin.OfficeContexts
         public DocumentViewModel(WikipediaResultsViewModel wikipediaResultsViewModel)
         {
             this.wikipediaResultsViewModel = wikipediaResultsViewModel;
+        }
+
+        public string GetNoteLabelText(IRibbonControl _)
+        {
+            return "Test Label Text";
+        }
+
+        public bool GetNoteLabelVisible(IRibbonControl _)
+        {
+            return true;
+        }
+
+        public bool GetNoteLabelEnabled(IRibbonControl _)
+        {
+            return false;
         }
 
         public override void Initialised(Document document)

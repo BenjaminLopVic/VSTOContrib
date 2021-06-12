@@ -81,7 +81,9 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                             {"getHelperText", f => f.GetHelperText(null)}
                         }
                     },
-                    {"tab", new Dictionary<string, Expression<Action<RibbonFactory>>>()},
+                    {
+                        "tab", new Dictionary<string, Expression<Action<RibbonFactory>>>()
+                    },
                     {
                         "button", new Dictionary<string, Expression<Action<RibbonFactory>>>
                         {
@@ -172,6 +174,9 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                             {"getText", f => f.GetText(null)},
                             {"onChange", f => f.OnTextChanged(null, null)}
                         }
+                    },
+                    {
+                        "labelControl", new Dictionary<string, Expression<Action<RibbonFactory>>>()
                     }
                 };
     }
