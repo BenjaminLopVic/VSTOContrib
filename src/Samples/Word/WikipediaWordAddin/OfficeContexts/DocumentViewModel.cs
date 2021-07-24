@@ -40,17 +40,17 @@ namespace WikipediaWordAddin.OfficeContexts
 
         public override void Initialised(Document document)
         {
+            PanelShown = false;
+
             if (document != null)
             {
                 vstoDocument= ((ApplicationFactory)VstoFactory).GetVstoObject(document);
                 vstoDocument.SelectionChange += VstoDocumentOnSelectionChange;
                 RibbonVisible = true;
-                PanelShown = true;
             }
             else
             {
                 RibbonVisible = false;
-                PanelShown = false;
             }
         }
 
