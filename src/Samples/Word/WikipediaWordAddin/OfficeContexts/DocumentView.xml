@@ -2,7 +2,7 @@
 <customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
   <ribbon>
     <tabs>
-      <tab idMso="TabView">
+      <tab id="wikipediaWordAddinId" label="Wiki Addin">
         <group id="wikipediaGroup" label="Wikipedia" getVisible="RibbonVisible">
           <toggleButton id="showWikipediaPaneButton" onAction="PanelShown" getPressed="PanelShown" label="Show" showImage="false" />
           <labelControl id="noteLabel" getLabel="GetNoteLabelText" getVisible="GetNoteLabelVisible" getEnabled="GetNoteLabelEnabled" />

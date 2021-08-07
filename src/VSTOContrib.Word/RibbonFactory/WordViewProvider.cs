@@ -69,13 +69,18 @@ namespace VSTOContrib.Word.RibbonFactory
                 window.ReleaseComObject();
             }
             documents.Remove(document);
-            if (wordApplication.Documents.Count == 1)
-            {
-                foreach (var viewInstance in wordApplication.Windows)
-                {
-                    NewView(this, new NewViewEventArgs(viewInstance, null, WordRibbonType.WordDocument.GetEnumDescription()));
-                }
-            }
+
+            // The code below is not safe because it might be called when the last instance of Word is closed.
+            // As a result all task panes will start re-registering when all resources are disposed.
+            // This will throw countless ObjectDisposedException exceptions and blink task panes on slow machines.
+
+            // if (wordApplication.Documents.Count == 1)
+            // {
+            //     foreach (var viewInstance in wordApplication.Windows)
+            //     {
+            //         NewView(this, new NewViewEventArgs(viewInstance, null, WordRibbonType.WordDocument.GetEnumDescription()));
+            //     }
+            // }
         }
 
         public void Initialise()
