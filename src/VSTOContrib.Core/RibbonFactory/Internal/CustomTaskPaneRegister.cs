@@ -62,6 +62,11 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                 var adapters = ribbonTaskPanes[ribbonViewModel];
                 foreach (var taskPaneAdapter in adapters)
                 {
+                    if (taskPaneAdapter.CheckDispose())
+                    {
+                        continue;
+                    }
+
                     if (!taskPaneAdapter.ViewRegistered(view))
                     {
                         foreach (var taskPaneRegistrationInfo in registrationInfo[ribbonViewModel])

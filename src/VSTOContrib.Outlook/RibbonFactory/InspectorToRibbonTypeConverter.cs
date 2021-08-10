@@ -18,10 +18,16 @@ namespace VSTOContrib.Outlook.RibbonFactory
         /// <returns></returns>
         public static OutlookRibbonType Convert(Inspector inspector)
         {
+            if (inspector == null)
+            {
+                return OutlookRibbonType.OutlookExplorer;
+            }
+
             object item = inspector.CurrentItem;
+
             if (item == null)
             {
-                return OutlookRibbonType.Unknown;
+                return OutlookRibbonType.OutlookExplorer;
             }
 
             var type = item.GetType();

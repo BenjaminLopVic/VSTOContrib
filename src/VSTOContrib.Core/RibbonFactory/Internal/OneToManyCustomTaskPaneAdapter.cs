@@ -14,6 +14,54 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
         private bool disposed;
         bool hasBeenHidden;
 
+        public bool CheckDispose()
+        {
+            if (this.disposed)
+            {
+                return true;
+            }
+
+            try
+            {
+                bool dummy = original.Visible;
+            }
+            catch (ObjectDisposedException)
+            {
+                this.Dispose();
+            }
+
+            return this.disposed;
+        }
+
+        private void DoOnPane(Action<CustomTaskPane> onPane)
+        {
+            if (disposed) return;
+
+            try
+            {
+                onPane(original);
+            }
+            catch (ObjectDisposedException)
+            {
+                Dispose();
+            }
+        }
+
+        private T DoOnPane<T>(Func<CustomTaskPane, T> onPane, T defaultValue = default(T))
+        {
+            if (disposed) return defaultValue;
+
+            try
+            {
+                return onPane(original);
+            }
+            catch (ObjectDisposedException)
+            {
+                Dispose();
+                return defaultValue;
+            }
+        }
+
         public OneToManyCustomTaskPaneAdapter(CustomTaskPane original, object viewContext)
         {
             ViewContext = viewContext;
@@ -32,18 +80,20 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
         {
             if (disposed) return;
             //Sync new task pane's properties up
-            customTaskPane.Visible = original.Visible;
-            customTaskPane.DockPosition = original.DockPosition;
+            customTaskPane.Visible = this.DoOnPane((p) => p.Visible, false);
 
-            if (original.DockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionTop &&
-                original.DockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionBottom)
+            var dockPosition = this.DoOnPane((p) => p.DockPosition);
+            customTaskPane.DockPosition = dockPosition;
+
+            if (dockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionTop &&
+                dockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionBottom)
             {
-                customTaskPane.Width = original.Width;
+                customTaskPane.Width = this.DoOnPane((p) => p.Width);
             }
-            if (original.DockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft &&
-                original.DockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionRight)
+            if (dockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft &&
+                dockPosition != Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionRight)
             {
-                customTaskPane.Height = original.Height;
+                customTaskPane.Height = this.DoOnPane((p) => p.Height);
             }
 
             customTaskPanes.Add(customTaskPane);
@@ -107,34 +157,34 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
 
         public UserControl Control
         {
-            get { return original.Control; }
+            get { return this.DoOnPane((p) => p.Control); }
         }
 
         public string Title
         {
-            get { return original.Title; }
+            get { return this.DoOnPane((p) => p.Title, string.Empty); }
         }
 
         public object Window
         {
-            get { return original.Window; }
+            get { return this.DoOnPane((p) => p.Window); }
         }
 
         public Microsoft.Office.Core.MsoCTPDockPosition DockPosition
         {
-            get { return original.DockPosition; }
+            get { return this.DoOnPane((p) => p.DockPosition); }
             set { Do(c => c.DockPosition = value); }
         }
 
         public Microsoft.Office.Core.MsoCTPDockPositionRestrict DockPositionRestrict
         {
-            get { return original.DockPositionRestrict; }
+            get { return this.DoOnPane((p) => p.DockPositionRestrict); }
             set { Do(c => c.DockPositionRestrict = value); }
         }
 
         public bool Visible
         {
-            get { return original.Visible; }
+            get { return this.DoOnPane((p) => p.Visible); }
             set { Do(c => c.Visible = value); }
         }
 
@@ -143,13 +193,13 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
 
         public int Height
         {
-            get { return original.Height; }
+            get { return this.DoOnPane((p) => p.Height); }
             set { Do(c => c.Height = value); }
         }
 
         public int Width
         {
-            get { return original.Width; }
+            get { return this.DoOnPane((p) => p.Width); }
             set { Do(c => c.Width = value); }
         }
 
@@ -170,6 +220,7 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
             }
             catch (ObjectDisposedException)
             {
+                this.disposed = true;
             }
 
             customTaskPanes.Remove(c);
@@ -198,19 +249,38 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
 
         public void HideIfVisible()
         {
-            if (Visible)
+            if (disposed || Visible)
             {
-                Visible = false;
-                hasBeenHidden = true;
+                try
+                {
+                    Visible = false;
+                }
+                catch
+                {
+                    // Do nothing.
+                }
+                finally
+                {
+                    hasBeenHidden = true;
+                }
             }
         }
 
         public void RestoreIfNeeded()
         {
-            if (hasBeenHidden)
+            if (!hasBeenHidden)
+            {
+                return;
+            }
+
+            try
             {
                 Visible = true;
                 hasBeenHidden = false;
+            }
+            catch
+            {
+                hasBeenHidden = true;
             }
         }
     }

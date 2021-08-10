@@ -81,6 +81,7 @@ namespace VSTOContrib.Core.RibbonFactory
             CallbackTarget callbackTarget = vstoContribContext.TagToCallbackTargetLookup[control.Tag + methodName];
 
             var view = (object)control.Context;
+
             IRibbonViewModel viewModelInstance = ribbonViewModelResolver.ResolveInstanceFor(view);
             if (viewModelInstance == null)
             {

@@ -2,7 +2,7 @@
 <customUI onLoad="Ribbon_Load" loadImage="GetImage" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
   <ribbon>
     <tabs>
-      <tab idMso="TabMail">
+      <tab id="GitHubExplorerAddInId" label="GitHub AddIn">
         <group id="githubGroup" label="GitHub">
           <button id="createTask"
                   label="Create Issue"
