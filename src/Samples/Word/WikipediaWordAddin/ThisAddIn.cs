@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Windows;
 using Microsoft.Office.Core;
 using VSTOContrib.Autofac;
@@ -11,6 +12,7 @@ namespace WikipediaWordAddin
     {
         private void ThisAddInStartup(object sender, EventArgs e)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         private void ThisAddInShutdown(object sender, EventArgs e)
@@ -43,3 +45,4 @@ namespace WikipediaWordAddin
         }
     }
 }
+
