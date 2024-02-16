@@ -34,7 +34,7 @@ namespace VSTOContrib.Word.RibbonFactory
 
         protected override void InitialiseRibbonFactoryController(IRibbonFactoryController controller, object application)
         {
-            wordViewProvider = new WordViewProvider((Application)application);
+            wordViewProvider = new WordViewProvider((Application)application, VstoFactory);
             controller.Initialise(wordViewProvider);
             wordViewProvider.RegisterOpenDocuments();
         }

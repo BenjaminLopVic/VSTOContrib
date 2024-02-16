@@ -62,6 +62,8 @@ namespace VSTOContrib.Core.RibbonFactory
             ShuttingDown();
         }
 
+        public Factory VstoFactory => context.VstoFactory;
+
         ///<summary>
         /// Gets or Sets the strategy that fetches the Ribbon XML for a given view
         ///</summary>

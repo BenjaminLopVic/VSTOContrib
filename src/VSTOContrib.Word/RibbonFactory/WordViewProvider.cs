@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Tools;
 using VSTOContrib.Core;
 using VSTOContrib.Core.Extensions;
 using VSTOContrib.Core.RibbonFactory;
@@ -15,17 +16,19 @@ namespace VSTOContrib.Word.RibbonFactory
         private readonly List<int> closedDocuments = new List<int>();
         private readonly Dictionary<Document, List<Window>> documents;
         private readonly Dictionary<Document, DocumentWrapper> documentWrappers;
+        private readonly Factory vstoFactory;
         private Application wordApplication;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WordViewProvider"/> class.
         /// </summary>
         /// <param name="wordApplication">The word application.</param>
-        public WordViewProvider(Application wordApplication)
+        public WordViewProvider(Application wordApplication, Factory vstoFactory)
         {
             documentWrappers = new Dictionary<Document, DocumentWrapper>();
             documents = new Dictionary<Document, List<Window>>();
             this.wordApplication = wordApplication;
+            this.vstoFactory = vstoFactory;
         }
 
         void WordApplicationWindowActivate(Document doc, Window wn)
@@ -35,7 +38,7 @@ namespace VSTOContrib.Word.RibbonFactory
             if (!documents.ContainsKey(doc))
             {
                 documents.Add(doc, new List<Window>());
-                var documentWrapper = new DocumentWrapper(doc);
+                var documentWrapper = new DocumentWrapper(doc, vstoFactory);
                 documentWrapper.Closed += DocumentClosed;
                 documentWrappers.Add(doc, documentWrapper);
             }
