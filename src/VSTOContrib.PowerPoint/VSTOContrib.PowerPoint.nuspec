@@ -1,19 +1,18 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
-		<id>VSTOContrib.Autofac.2024</id>
+		<id>VSTOContrib.Powerpoint.2024</id>
 		<version>1.1.0</version>
-		<title>VSTOContrib.Autofac</title>
+		<title>VSTOContrib.Powerpoint</title>
 		<authors>Jake Ginnivan</authors>
 		<owners>BenjaminLopVic</owners>
 		<projectUrl>https://github.com/BenjaminLopVic/VSTOContrib</projectUrl>
 		<license type="expression">MIT</license>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>Adds Autofac support to VSTO Contrib. This is a fork of the original project: https://github.com/JakeGinnivan/VSTOContrib.</description>
-		<tags>VSTO,Office,Autofac,IoC</tags>
+		<description>Adds Powerpoint support to VSTO Contrib. This is a fork of the original project: https://github.com/JakeGinnivan/VSTOContrib.</description>
+		<tags>VSTO,Office,Autofac,IoC,Powerpoint</tags>
 		<dependencies>
 			<group targetFramework=".NETFramework4.8">
-				<dependency id="Autofac" version="8.0.0"/>
 				<dependency id="VSTOContrib.Core.2024" version="1.1.0"/>
 			</group>
 		</dependencies>
