@@ -10,9 +10,9 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
     internal class CustomTaskPaneRegister : ICustomTaskPaneRegister
     {
         Lazy<CustomTaskPaneCollection> customTaskPaneCollection;
-        readonly Dictionary<IRibbonViewModel, List<TaskPaneRegistrationInfo>> registrationInfo;
-        readonly Dictionary<IRibbonViewModel, List<OneToManyCustomTaskPaneAdapter>> ribbonTaskPanes;
-        readonly Dictionary<object, List<IRibbonViewModel>> windowToTaskPaneLookup;
+        readonly Dictionary<IRibbonViewModel, HashSet<TaskPaneRegistrationInfo>> registrationInfo;
+        readonly Dictionary<IRibbonViewModel, HashSet<OneToManyCustomTaskPaneAdapter>> ribbonTaskPanes;
+        readonly Dictionary<object, HashSet<IRibbonViewModel>> windowToTaskPaneLookup;
 
         public CustomTaskPaneRegister(AddInBase addinBase)
         {
@@ -21,9 +21,9 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                 var field = addinBase.GetType().GetField("CustomTaskPanes", BindingFlags.Instance | BindingFlags.NonPublic);
                 return (CustomTaskPaneCollection)field.GetValue(addinBase);
             });
-            registrationInfo = new Dictionary<IRibbonViewModel, List<TaskPaneRegistrationInfo>>();
-            ribbonTaskPanes = new Dictionary<IRibbonViewModel, List<OneToManyCustomTaskPaneAdapter>>();
-            windowToTaskPaneLookup = new Dictionary<object, List<IRibbonViewModel>>();
+            registrationInfo = new Dictionary<IRibbonViewModel, HashSet<TaskPaneRegistrationInfo>>();
+            ribbonTaskPanes = new Dictionary<IRibbonViewModel, HashSet<OneToManyCustomTaskPaneAdapter>>();
+            windowToTaskPaneLookup = new Dictionary<object, HashSet<IRibbonViewModel>>();
         }
 
         public void RegisterCustomTaskPanes(IRibbonViewModel ribbonViewModel, object view, object viewContext)
@@ -33,11 +33,10 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
 
             if (!registrationInfo.ContainsKey(ribbonViewModel))
             {
+                registrationInfo[ribbonViewModel] = new HashSet<TaskPaneRegistrationInfo>();
                 registersCustomTaskPanes.RegisterTaskPanes((controlFactory, title, initiallyVisible) =>
                 {
                     var taskPaneRegistrationInfo = new TaskPaneRegistrationInfo(controlFactory, title);
-                    if (!registrationInfo.ContainsKey(ribbonViewModel))
-                        registrationInfo.Add(ribbonViewModel, new List<TaskPaneRegistrationInfo>());
                     registrationInfo[ribbonViewModel].Add(taskPaneRegistrationInfo);
 
                     var taskPane = Register(view, taskPaneRegistrationInfo);
@@ -47,10 +46,10 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                     };
 
                     if (!ribbonTaskPanes.ContainsKey(ribbonViewModel))
-                        ribbonTaskPanes.Add(ribbonViewModel, new List<OneToManyCustomTaskPaneAdapter>());
+                        ribbonTaskPanes[ribbonViewModel] = new HashSet<OneToManyCustomTaskPaneAdapter>();
 
                     if (!windowToTaskPaneLookup.ContainsKey(view))
-                        windowToTaskPaneLookup.Add(view, new List<IRibbonViewModel>());
+                        windowToTaskPaneLookup[view] = new HashSet<IRibbonViewModel>();
 
                     ribbonTaskPanes[ribbonViewModel].Add(taskPaneAdapter);
                     windowToTaskPaneLookup[view].Add(ribbonViewModel);
@@ -75,18 +74,26 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                         }
                     }
                     else
+                    {
                         taskPaneAdapter.Refresh(view);
+                    }
                 }
             }
 
             if (windowToTaskPaneLookup.ContainsKey(view))
             {
-                foreach (var oneToManyCustomTaskPaneAdapter in windowToTaskPaneLookup[view]
-                    .Except(new[] {ribbonViewModel})
-                    .Where(viewModelToHide => ribbonTaskPanes.ContainsKey(viewModelToHide))
-                    .SelectMany(viewModelToHide => ribbonTaskPanes[viewModelToHide]))
+                var modelsToHide = new HashSet<IRibbonViewModel>(windowToTaskPaneLookup[view]);
+                modelsToHide.Remove(ribbonViewModel);
+
+                foreach (var viewModelToHide in modelsToHide)
                 {
-                    oneToManyCustomTaskPaneAdapter.HideIfVisible();
+                    if (ribbonTaskPanes.TryGetValue(viewModelToHide, out var adapters))
+                    {
+                        foreach (var adapter in adapters)
+                        {
+                            adapter.HideIfVisible();
+                        }
+                    }
                 }
             }
 
@@ -102,7 +109,6 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
         private CustomTaskPane Register(object view, TaskPaneRegistrationInfo taskPaneRegistrationInfo)
         {
             var taskPane = customTaskPaneCollection.Value.Add(taskPaneRegistrationInfo.ControlFactory(), taskPaneRegistrationInfo.Title, view);
-
             return taskPane;
         }
 
