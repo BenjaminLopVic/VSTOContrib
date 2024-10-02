@@ -15,11 +15,16 @@ namespace VSTOContrib.Core.Wpf
     [Guid("59A7E2E3-B0AD-449A-81B9-58398873AC8B")]
     public partial class WpfPanelHost : UserControl
     {
+        private readonly ScrollBarVisibility _verticalScrollBarVisibility;
+        private readonly ScrollBarVisibility _horizontalScrollBarVisibility;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WpfPanelHost"/> class.
         /// </summary>
-        public WpfPanelHost()
+        public WpfPanelHost(ScrollBarVisibility verticalScrollBarVisibility = ScrollBarVisibility.Auto, ScrollBarVisibility horizontalScrollBarVisibility = ScrollBarVisibility.Disabled)
         {
+            _verticalScrollBarVisibility = verticalScrollBarVisibility;
+            _horizontalScrollBarVisibility = horizontalScrollBarVisibility;
             InitializeComponent();
         }
 
@@ -38,8 +43,8 @@ namespace VSTOContrib.Core.Wpf
                 elementHost1.Child = new ScrollViewer
                 {
                     Content = value,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+                    HorizontalScrollBarVisibility = _horizontalScrollBarVisibility,
+                    VerticalScrollBarVisibility = _verticalScrollBarVisibility
                 };
                 elementHost1.Width++;
                 elementHost1.Dock = DockStyle.Fill;

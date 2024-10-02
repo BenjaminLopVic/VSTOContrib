@@ -29,7 +29,7 @@ namespace VSTOContrib.Core
         ///<summary>
         /// This holds the window handle for the found Window.
         ///</summary>
-        IntPtr _windowHandle = IntPtr.Zero;
+        readonly IntPtr _windowHandle = IntPtr.Zero;
 
         ///<summary>
         /// The <b>Handle</b> of the Outlook WindowObject.
