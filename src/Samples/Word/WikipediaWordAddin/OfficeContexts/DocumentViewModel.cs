@@ -88,7 +88,7 @@ namespace WikipediaWordAddin.OfficeContexts
         public void RegisterTaskPanes(Register register)
         {
             wikipediaResultsTaskPane = register(
-                () => new WpfPanelHost
+                () => new WpfPanelHost(System.Windows.Controls.ScrollBarVisibility.Disabled)
                 {
                     Child = new WikipediaResultsView //This is a WPF User control
                     {

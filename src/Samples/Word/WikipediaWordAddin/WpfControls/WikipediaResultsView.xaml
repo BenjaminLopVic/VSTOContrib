@@ -7,28 +7,34 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance wpfControls1:WikipediaResultsViewModel}">
     <Grid>
-        <ItemsControl ItemsSource="{Binding SearchResults.query.search}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="0 0 0 1"
+        <DockPanel>
+            <Label Content="Bottom label" DockPanel.Dock="Bottom"/>
+            <ScrollViewer>
+                
+            <ItemsControl ItemsSource="{Binding SearchResults.query.search}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0 0 0 1"
                             BorderBrush="Black">
-                        <StackPanel>
-                            <TextBlock
+                            <StackPanel>
+                                <TextBlock
                                    TextWrapping="Wrap" 
                                    Margin="3" FontWeight="Bold">
                                 <Hyperlink NavigateUri="{Binding Link}" Command="{Binding OpenLink}">
                                     <Run Text="{Binding title}"></Run>
                                 </Hyperlink>
-                            </TextBlock>
+                                </TextBlock>
 
-                            <TextBlock Text="{Binding snippet}"
+                                <TextBlock Text="{Binding snippet}"
                                    TextWrapping="Wrap" 
                                    Margin="3"/>
-                        </StackPanel>
-                    </Border>
+                            </StackPanel>
+                        </Border>
 
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </UserControl>
