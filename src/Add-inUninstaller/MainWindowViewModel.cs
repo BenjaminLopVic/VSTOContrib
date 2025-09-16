@@ -64,29 +64,35 @@ namespace Add_inUninstaller
                     .ToString()
                     .Replace("|vstolocal", string.Empty)
                     .Replace("file:///", string.Empty);
-
-                var addin = new Addin
+                try
                 {
-                    AddinName = subKey.GetValue("FriendlyName").ToString(),
-                    Description = subKey.GetValue("Description").ToString(),
-                    RegistryKey = subKey,
-                    Product = product,
-                    Manifest = manifestFile,
-                    ManifestExists = File.Exists(manifestFile)
-                };
+                    var addin = new Addin
+                    {
+                        AddinName = subKey.GetValue("FriendlyName").ToString(),
+                        Description = subKey.GetValue("Description").ToString(),
+                        RegistryKey = subKey,
+                        Product = product,
+                        Manifest = manifestFile,
+                        ManifestExists = File.Exists(manifestFile)
+                    };
 
-                _addins.Add(addin);
+                    _addins.Add(addin);
+                }
+                catch
+                {
+
+                }
             }
         }
 
         public Addin SelectedAddin
         {
             get { return _selectedAddin; }
-            set 
+            set
             {
                 _selectedAddin = value;
                 OnPropertyChanged("SelectedAddin");
-                ((DelegateCommand) UninstallCommand).RaiseCanExecuteChanged();
+                ((DelegateCommand)UninstallCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -125,12 +131,12 @@ namespace Add_inUninstaller
                     {
                         SelectedAddin.RegistryKey.DeleteKey();
                         MessageBox.Show(string.Format(
-                            "Add-in was not installed through VSTOInstaller (probably visual studio instead), {0} was manually removed", 
+                            "Add-in was not installed through VSTOInstaller (probably visual studio instead), {0} was manually removed",
                             SelectedAddin.AddinName), "Success");
                     }
                     else
                     {
-                        MessageBox.Show(string.Format("{0} uninstalled", SelectedAddin.AddinName), "Success");                        
+                        MessageBox.Show(string.Format("{0} uninstalled", SelectedAddin.AddinName), "Success");
                     }
                 }
                 else
