@@ -19,6 +19,11 @@ namespace VSTOContrib.Core
             Loggers.Add(l => System.Diagnostics.Trace.WriteLine(l));
         }
 
+        public static void AddLoggingAction(Action<string> logger)
+        {
+            Loggers.Add(logger);
+        }
+
         public static void SetLevel(VstoContribLogLevel logLevel)
         {
             level = logLevel;
