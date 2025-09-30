@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>VSTOContrib.Autofac.2024</id>
-		<version>1.1.2</version>
+		<version>1.2.0</version>
 		<title>VSTOContrib.Autofac</title>
 		<authors>Jake Ginnivan</authors>
 		<owners>BenjaminLopVic</owners>
@@ -14,7 +14,7 @@
 		<dependencies>
 			<group targetFramework=".NETFramework4.8">
 				<dependency id="Autofac" version="8.4.0"/>
-				<dependency id="VSTOContrib.Core.2024" version="1.1.1"/>
+				<dependency id="VSTOContrib.Core.2024" version="1.2.0"/>
 			</group>
 		</dependencies>
 	</metadata>

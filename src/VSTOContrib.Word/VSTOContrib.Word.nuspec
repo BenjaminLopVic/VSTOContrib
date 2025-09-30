@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>VSTOContrib.Word.2024</id>
-		<version>1.1.0</version>
+		<version>1.2.0</version>
 		<title>VSTOContrib.Word</title>
 		<authors>Jake Ginnivan</authors>
 		<owners>BenjaminLopVic</owners>
@@ -13,7 +13,7 @@
 		<tags>VSTO,Office,Autofac,IoC,Word</tags>
 		<dependencies>
 			<group targetFramework=".NETFramework4.8">
-				<dependency id="VSTOContrib.Core.2024" version="1.1.0"/>
+				<dependency id="VSTOContrib.Core.2024" version="1.2.0"/>
 			</group>
 		</dependencies>
 	</metadata>
