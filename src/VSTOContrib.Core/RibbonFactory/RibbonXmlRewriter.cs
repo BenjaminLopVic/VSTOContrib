@@ -36,7 +36,7 @@ namespace VSTOContrib.Core.RibbonFactory
 
             //We have to override the Ribbon_Load event to make sure we get the callback
             XElement customUi =
-                ribbonDoc.Descendants(XName.Get("customUI", OfficeCustomui)).SingleOrDefault() ?? 
+                ribbonDoc.Descendants(XName.Get("customUI", OfficeCustomui)).SingleOrDefault() ??
                 ribbonDoc.Descendants(XName.Get("customUI", OfficeCustomui4)).Single();
 
             customUi.SetAttributeValue("onLoad", loadMethodName);
@@ -55,7 +55,7 @@ namespace VSTOContrib.Core.RibbonFactory
         public string RewriteDynamicXml(string ribbonTypes, string dynamicContext, string dynamicXml)
         {
             var dynamicXmlDoc = XDocument.Parse(dynamicXml);
-            
+
             WireUpEvents(ribbonTypes, dynamicContext, dynamicXmlDoc, dynamicXmlDoc.Root.GetDefaultNamespace());
 
             return dynamicXmlDoc.ToString();
@@ -70,11 +70,19 @@ namespace VSTOContrib.Core.RibbonFactory
                 IEnumerable<XElement> xElements =
                     ribbonDoc.Descendants(XName.Get(ribbonControl, xNamespace.NamespaceName));
 
+
                 foreach (XElement xElement in xElements)
                 {
+                    //Special case for command control since they can't have tags
+                    if (ribbonControl == "command")
+                    {
+                        xElement.SetAttributeValue(XName.Get("onAction"), "onCommand");
+                        continue;
+                    }
+
                     XAttribute elementId = xElement.Attribute(XName.Get("id"));
                     XAttribute elementQId = xElement.Attribute(XName.Get("idQ"));
-                    
+
                     //Go through each possible callback, Concat with common methods on all controls
                     foreach (string controlCallback in controlCallbackLookup.GetVstoControlCallbacks(ribbonControl))
                     {
@@ -85,7 +93,7 @@ namespace VSTOContrib.Core.RibbonFactory
                         if (elementId == null && elementQId == null)
                         {
                             throw new InvalidOperationException(string.Format(
-                                "VSTO Contrib Requires controls to have an id or an idQ when callbacks are registered. Control='{0}', Callback='{1}'", 
+                                "VSTO Contrib Requires controls to have an id or an idQ when callbacks are registered. Control='{0}', Callback='{1}'",
                                 ribbonControl, controlCallback));
                         }
 

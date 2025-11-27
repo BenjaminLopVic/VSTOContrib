@@ -458,5 +458,11 @@ namespace VSTOContrib.Core.RibbonFactory
         {
             return ribbonFactoryController.InvokeGet<string>(control, () => GetHelperText(null));
         }
+
+        public virtual void OnCommand(IRibbonControl control, ref bool cancelDefault)
+        {
+            cancelDefault = false;
+            ribbonFactoryController.InvokeCommand(control, ref cancelDefault);
+        }
     }
 }

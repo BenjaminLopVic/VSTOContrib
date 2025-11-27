@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+	<commands>
+		<command idMso="Paste" />
+		<command idMso="Copy" />
+	</commands>
   <ribbon>
     <tabs>
       <tab id="wikipediaWordAddinId" label="Wiki Addin">
         <group id="wikipediaGroup" label="Wikipedia" getVisible="RibbonVisible">
-          <toggleButton id="showWikipediaPaneButton" onAction="PanelShown" getPressed="PanelShown" label="Show" showImage="false" />
+			<toggleButton id="showWikipediaPaneButton" onAction="PanelShown" getPressed="PanelShown" label="Show" showImage="false" />
+			<button id="testButton" onAction="TestAction" label="Test" showImage="false" />
           <labelControl id="noteLabel" getLabel="GetNoteLabelText" getVisible="GetNoteLabelVisible" getEnabled="GetNoteLabelEnabled" />
         </group>
       </tab>

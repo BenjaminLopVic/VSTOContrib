@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
 using VSTOContrib.Core.Extensions;
@@ -21,6 +22,22 @@ namespace WikipediaWordAddin.OfficeContexts
         public DocumentViewModel(WikipediaResultsViewModel wikipediaResultsViewModel)
         {
             this.wikipediaResultsViewModel = wikipediaResultsViewModel;
+        }
+
+        public void OnPaste(IRibbonControl control, ref bool cancelDefault)
+        {
+            MessageBox.Show("OnPaste", "WikipediaWordAddin");
+            cancelDefault = false;
+        }
+
+        public void OnCopy(IRibbonControl control, ref bool cancelDefault)
+        {
+            MessageBox.Show("OnCopy", "WikipediaWordAddin");
+            cancelDefault = false;
+        }
+
+        public void TestAction(IRibbonControl _)
+        {
         }
 
         public string GetNoteLabelText(IRibbonControl _)

@@ -177,6 +177,9 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
                     },
                     {
                         "labelControl", new Dictionary<string, Expression<Action<RibbonFactory>>>()
+                    },
+                    {
+                        "command", new Dictionary<string, Expression<Action<RibbonFactory>>>()
                     }
                 };
     }

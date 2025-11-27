@@ -29,7 +29,7 @@ namespace VSTOContrib.Core.RibbonFactory
 
             customTaskPaneRegister = new CustomTaskPaneRegister(vstoContribContext.AddinBase);
             ribbonViewModelResolver = new ViewModelResolver(
-                ribbonTypes, customTaskPaneRegister, viewContextProvider, 
+                ribbonTypes, customTaskPaneRegister, viewContextProvider,
                 vstoContribContext);
 
             var ribbonXmlRewriter = new RibbonXmlRewriter(vstoContribContext, ribbonViewModelResolver);
@@ -63,7 +63,7 @@ namespace VSTOContrib.Core.RibbonFactory
         {
             // Remove any previous registered callbacks for this dynamic context
             vstoContribContext.RemoveCallbacksForDynamicContext(control.Tag);
-            
+
             // Delegate to the view model to get the raw xml
             var xmlString = InvokeGet(control, caller, parameters);
 
@@ -136,7 +136,7 @@ namespace VSTOContrib.Core.RibbonFactory
 
             try
             {
-                return (T) result;
+                return (T)result;
             }
             catch
             {
@@ -189,6 +189,46 @@ namespace VSTOContrib.Core.RibbonFactory
                             .Concat(parameters)
                             .ToArray());
                 }
+            }
+            catch (TargetInvocationException e)
+            {
+                var innerEx = e.InnerException;
+                PreserveStackTrace(innerEx);
+                if (vstoContribContext.ErrorHandlers.Count == 0)
+                {
+                    Trace.TraceError(innerEx.ToString());
+                }
+
+                var handled = vstoContribContext.ErrorHandlers.Any(errorHandler => errorHandler.Handle(innerEx));
+
+                if (!handled)
+                    throw innerEx;
+            }
+        }
+
+        public void InvokeCommand(IRibbonControl control, ref bool cancelDefault)
+        {
+            try
+            {
+                var view = (object)control.Context;
+                IRibbonViewModel viewModelInstance = ribbonViewModelResolver.ResolveInstanceFor(view);
+                if (viewModelInstance == null)
+                {
+                    return;
+                }
+
+                VstoContribLog.Debug(l => l("Command callback being invoked on {0} (View: {1}, ViewModel: {2})",
+                    control.Id, view.ToLogFormat(), viewModelInstance.ToLogFormat()));
+
+                Type type = viewModelInstance.GetType();
+                MethodInfo method = type.GetMethod("On" + control.Id);
+                if (method != null)
+                {
+                    object[] args = new object[] { control, cancelDefault };
+                    method.Invoke(viewModelInstance, args);
+                    cancelDefault = (bool)args[1];
+                }
+
             }
             catch (TargetInvocationException e)
             {

@@ -213,15 +213,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
-    <PackageReference Include="VSTOContrib.Autofac.2024">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="VSTOContrib.Core.2024">
-      <Version>1.1.3</Version>
-    </PackageReference>
-    <PackageReference Include="VSTOContrib.Word.2024">
-      <Version>1.1.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="WpfControls\WikipediaResultsView.xaml">
@@ -231,6 +222,20 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="OfficeContexts\DocumentView.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\VSTOContrib.Autofac\VSTOContrib.Autofac.csproj">
+      <Project>{cbc234f1-3f4a-4a1a-9a92-6c1a7ad98e77}</Project>
+      <Name>VSTOContrib.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\VSTOContrib.Core\VSTOContrib.Core.csproj">
+      <Project>{6b0191eb-56bd-4a66-8abf-b4b96905afbf}</Project>
+      <Name>VSTOContrib.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\VSTOContrib.Word\VSTOContrib.Word.csproj">
+      <Project>{9d3119d9-b898-45e8-92af-2566da3f85fc}</Project>
+      <Name>VSTOContrib.Word</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
