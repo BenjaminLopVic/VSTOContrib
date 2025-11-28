@@ -169,7 +169,7 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
         private IRibbonViewModel BuildViewModel(string ribbonType, object viewInstance, object viewContext)
         {
             var viewModelType = ribbonTypeLookup[ribbonType];
-            VstoContribLog.Info(_ => _("Building ViewModel of type {1} for ribbon {1} with context {2}", 
+            VstoContribLog.Info(_ => _("Building ViewModel of type {1} for ribbon {1} with context {2}",
                 viewModelType.Name, ribbonType, viewContext.ToLogFormat()));
             var ribbonViewModel = vstoContribContext.ViewModelFactory.Resolve(viewModelType);
             ribbonViewModel.VstoFactory = vstoContribContext.VstoFactory;
@@ -233,11 +233,13 @@ namespace VSTOContrib.Core.RibbonFactory.Internal
             var viewModelInstance = contextToViewModelLookup[context];
             VstoContribLog.Info(_ => _("ViewModel is {0}", viewModelInstance.ToLogFormat()));
 
-            var notifyOfPropertyChanged = viewModelInstance as INotifyPropertyChanged;
-            if (notifyOfPropertyChanged != null)
-                notifyOfPropertyChanged.PropertyChanged -= NotifiesOfPropertyChangedPropertyChanged;
-
             viewModelInstance.Cleanup();
+
+            if (viewModelInstance is INotifyPropertyChanged notifyOfPropertyChanged)
+            {
+                notifyOfPropertyChanged.PropertyChanged -= NotifiesOfPropertyChangedPropertyChanged;
+            }
+
             vstoContribContext.ViewModelFactory.Release(viewModelInstance);
             customTaskPaneRegister.CleanupViewModel(viewModelInstance);
             contextToViewModelLookup.Remove(context);

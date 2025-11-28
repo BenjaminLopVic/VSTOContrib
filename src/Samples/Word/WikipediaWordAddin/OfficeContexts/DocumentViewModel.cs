@@ -117,6 +117,7 @@ namespace WikipediaWordAddin.OfficeContexts
 
         public override void Cleanup()
         {
+            RibbonVisible = false;
             wikipediaResultsTaskPane.VisibleChanged -= TaskPaneVisibleChanged;
             vstoDocument.SelectionChange -= VstoDocumentOnSelectionChange;
         }
